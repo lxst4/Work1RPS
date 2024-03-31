@@ -50,6 +50,7 @@ namespace Work1RPS
                                             ref decimal x3, ref decimal y3, ref decimal x4, ref decimal y4)
         {
             string message = "0";
+
             //Находим уравнения прямых
             //Первая прямая
             //Вертикальная
@@ -106,15 +107,11 @@ namespace Work1RPS
                    );
             }
 
-            //Отрезки совпадают 
-            if (k1 == k2 && b1 == b2)
-                message = "Отрезки совпадают.";
-
             //Отрезки параллельны
             if (k1 == k2 && b1 != b2)
                 message = "Отрезки параллельны, точек пересечения нет.";
 
-            //Один отрезок вертикальный, отрезки не параллельны и не совпадают
+            //Один отрезок вертикальный, отрезки не параллельны и не накладываются друг на друга
             decimal xintersection = 0, yintersection = 0;
 
             if ((k1 == 0 || k2 == 0) && b1 != b2)
@@ -160,9 +157,168 @@ namespace Work1RPS
                 { message = "Отрезки не пересекаются."; }
             }
 
+            //начальные или конечные точки отрезков совпадают 
+
+            if ((x1 == x3 && y1 == y3) || (x1 == x4 && y1 == y4))
+            {
+                message = "Отрезки пересекаются." + Environment.NewLine +
+                   "Точка пересечения:" + Environment.NewLine +
+                   "x = " + Math.Round(x1, 3).ToString("0.000") + ", y = " + Math.Round(y1, 3).ToString("0.000");
+            }
+
+            if ((x2 == x3 && y2 == y3) || (x2 == x4 && y2 == y4))
+            {
+                message = "Отрезки пересекаются." + Environment.NewLine +
+                   "Точка пересечения:" + Environment.NewLine +
+                   "x = " + Math.Round(x2, 3).ToString("0.000") + ", y = " + Math.Round(y2, 3).ToString("0.000");
+            }
+
+            //Отрезки накладываются друг на друга 
+            if (k1 == k2 && b1 == b2)
+                message = "Отрезки накладываются друг на друга.";
+
             return message;
         }
 
+        public static bool GetCheck(TextBox pointAx1, TextBox pointAy1,
+                                    TextBox pointBx2, TextBox pointBy2,
+                                    TextBox pointCx3, TextBox pointCy3,
+                                    TextBox pointDx4, TextBox pointDy4)
+        {
+            bool all_good = true;
+
+            if (string.IsNullOrEmpty(pointAx1.Text) ||
+                string.IsNullOrEmpty(pointAy1.Text) ||
+                string.IsNullOrEmpty(pointBx2.Text) ||
+                string.IsNullOrEmpty(pointBy2.Text) ||
+                string.IsNullOrEmpty(pointCx3.Text) ||
+                string.IsNullOrEmpty(pointCy3.Text) ||
+                string.IsNullOrEmpty(pointDx4.Text) ||
+                string.IsNullOrEmpty(pointDy4.Text))
+            {
+                MessageBox.Show("Не все значения были введены", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+
+            if (!decimal.TryParse(pointAx1.Text, out decimal x1))
+            {
+                MessageBox.Show("Введено некорректное значение x1", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                all_good = false;
+            }
+
+            if (!decimal.TryParse(pointAy1.Text, out decimal y1))
+            {
+                MessageBox.Show("Введено некорректное значение y1", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                all_good = false;
+            }
+
+            if (!decimal.TryParse(pointBx2.Text, out decimal x2))
+            {
+                MessageBox.Show("Введено некорректное значение x2", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                all_good = false;
+            }
+
+            if (!decimal.TryParse(pointBy2.Text, out decimal y2))
+            {
+                MessageBox.Show("Введено некорректное значение y2", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                all_good = false;
+            }
+
+            if (!decimal.TryParse(pointCx3.Text, out decimal x3))
+            {
+                MessageBox.Show("Введено некорректное значение x3", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                all_good = false;
+            }
+
+            if (!decimal.TryParse(pointCy3.Text, out decimal y3))
+            {
+                MessageBox.Show("Введено некорректное значение y3", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                all_good = false;
+            }
+
+            if (!decimal.TryParse(pointDx4.Text, out decimal x4))
+            {
+                MessageBox.Show("Введено некорректное значение x4", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                all_good = false;
+            }
+
+            if (!decimal.TryParse(pointDy4.Text, out decimal y4))
+            {
+                MessageBox.Show("Введено некорректное значение y4", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                all_good = false;
+            }
+
+            if (all_good)
+            {
+                if (x1 == x2 && y1 == y2)
+                {
+                    MessageBox.Show(
+                        "Координаты начала и конца отрезка 1 совпадают, вы ввели точку, а не отрезок.",
+                        "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error
+                        );
+                    all_good = false;
+                }
+
+                if (x3 == x4 && y3 == y4)
+                {
+                    MessageBox.Show(
+                        "Координаты начала и конца отрезка 2 совпадают, вы ввели точку, а не отрезок.",
+                        "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error
+                        );
+                    all_good = false;
+                }
+
+                if (pointAx1.Text != x1.ToString())
+                {
+                    pointAx1.Text = x1.ToString();
+                    MessageBox.Show("Значение x1 было исправлено", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+
+                if (pointAy1.Text != y1.ToString())
+                {
+                    pointAy1.Text = y1.ToString();
+                    MessageBox.Show("Значение y1 было исправлено", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+
+                if (pointBx2.Text != x2.ToString())
+                {
+                    pointBx2.Text = x2.ToString();
+                    MessageBox.Show("Значение x2 было исправлено", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+
+                if (pointBy2.Text != y2.ToString())
+                {
+                    pointBy2.Text = y2.ToString();
+                    MessageBox.Show("Значение y2 было исправлено", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+
+                if (pointCx3.Text != x3.ToString())
+                {
+                    pointCx3.Text = x3.ToString();
+                    MessageBox.Show("Значение x3 было исправлено", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+
+                if (pointCy3.Text != y3.ToString())
+                {
+                    pointCy3.Text = y3.ToString();
+                    MessageBox.Show("Значение y3 было исправлено", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+
+                if (pointDx4.Text != x4.ToString())
+                {
+                    pointDx4.Text = x4.ToString();
+                    MessageBox.Show("Значение x4 было исправлено", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+
+                if (pointDy4.Text != y4.ToString())
+                {
+                    pointDy4.Text = y4.ToString();
+                    MessageBox.Show("Значение y4 было исправлено", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+            return all_good;
+        }
     }
-   
 }
+
+

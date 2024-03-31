@@ -3,7 +3,12 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34622.214
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Work1RPS", "Work1RPS\Work1RPS.csproj", "{1A8198F3-4164-4B43-B052-A93AF78C83A9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Work1RPS", "Work1RPS\Work1RPS.csproj", "{1A8198F3-4164-4B43-B052-A93AF78C83A9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestCheckPrj", "TestCheckPrj\TestCheckPrj.csproj", "{E1A6AED2-AEC5-4A52-AFBC-F8A0A1D86A00}"
+	ProjectSection(ProjectDependencies) = postProject
+		{1A8198F3-4164-4B43-B052-A93AF78C83A9} = {1A8198F3-4164-4B43-B052-A93AF78C83A9}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +20,10 @@ Global
 		{1A8198F3-4164-4B43-B052-A93AF78C83A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1A8198F3-4164-4B43-B052-A93AF78C83A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1A8198F3-4164-4B43-B052-A93AF78C83A9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E1A6AED2-AEC5-4A52-AFBC-F8A0A1D86A00}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E1A6AED2-AEC5-4A52-AFBC-F8A0A1D86A00}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E1A6AED2-AEC5-4A52-AFBC-F8A0A1D86A00}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E1A6AED2-AEC5-4A52-AFBC-F8A0A1D86A00}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

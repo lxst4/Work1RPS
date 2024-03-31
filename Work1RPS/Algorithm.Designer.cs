@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Algorithm));
             label1 = new Label();
             label2 = new Label();
             label3 = new Label();
@@ -40,10 +39,10 @@
             pointDx4 = new TextBox();
             pointCx3 = new TextBox();
             pointBx2 = new TextBox();
-            Bth_GetResult = new Button();
-            Bth_SaveOriginal = new Button();
-            Bth_SaveResult = new Button();
-            Bth_GetFromFile = new Button();
+            Btn_GetResult = new Button();
+            Btn_SaveOriginal = new Button();
+            Btn_SaveResult = new Button();
+            Btn_GetFromFile = new Button();
             result_label = new Label();
             pointAy1 = new TextBox();
             pointDy4 = new TextBox();
@@ -160,56 +159,55 @@
             pointBx2.TabIndex = 10;
             pointBx2.TextChanged += pointBx2_TextChanged;
             // 
-            // Bth_GetResult
+            // Btn_GetResult
             // 
-            Bth_GetResult.Font = new Font("Segoe UI", 14F);
-            Bth_GetResult.Location = new Point(68, 384);
-            Bth_GetResult.Name = "Bth_GetResult";
-            Bth_GetResult.Size = new Size(194, 50);
-            Bth_GetResult.TabIndex = 11;
-            Bth_GetResult.Text = "Выполнить";
-            Bth_GetResult.UseVisualStyleBackColor = true;
-            Bth_GetResult.Click += Bth_GetResult_Click;
+            Btn_GetResult.Font = new Font("Segoe UI", 14F);
+            Btn_GetResult.Location = new Point(68, 384);
+            Btn_GetResult.Name = "Btn_GetResult";
+            Btn_GetResult.Size = new Size(194, 50);
+            Btn_GetResult.TabIndex = 11;
+            Btn_GetResult.Text = "Выполнить";
+            Btn_GetResult.UseVisualStyleBackColor = true;
+            Btn_GetResult.Click += Btn_GetResult_Click;
             // 
-            // Bth_SaveOriginal
+            // Btn_SaveOriginal
             // 
-            Bth_SaveOriginal.Font = new Font("Segoe UI", 14F);
-            Bth_SaveOriginal.Location = new Point(496, 240);
-            Bth_SaveOriginal.Name = "Bth_SaveOriginal";
-            Bth_SaveOriginal.Size = new Size(270, 48);
-            Bth_SaveOriginal.TabIndex = 12;
-            Bth_SaveOriginal.Text = "Сохранить исходные данные";
-            Bth_SaveOriginal.UseVisualStyleBackColor = true;
-            Bth_SaveOriginal.Click += Bth_SaveOriginal_Click;
+            Btn_SaveOriginal.Font = new Font("Segoe UI", 14F);
+            Btn_SaveOriginal.Location = new Point(496, 240);
+            Btn_SaveOriginal.Name = "Btn_SaveOriginal";
+            Btn_SaveOriginal.Size = new Size(270, 48);
+            Btn_SaveOriginal.TabIndex = 12;
+            Btn_SaveOriginal.Text = "Сохранить исходные данные";
+            Btn_SaveOriginal.UseVisualStyleBackColor = true;
+            Btn_SaveOriginal.Click += Btn_SaveOriginal_Click;
             // 
-            // Bth_SaveResult
+            // Btn_SaveResult
             // 
-            Bth_SaveResult.Font = new Font("Segoe UI", 14F);
-            Bth_SaveResult.Location = new Point(496, 311);
-            Bth_SaveResult.Name = "Bth_SaveResult";
-            Bth_SaveResult.Size = new Size(270, 48);
-            Bth_SaveResult.TabIndex = 13;
-            Bth_SaveResult.Text = "Сохранить результат";
-            Bth_SaveResult.UseVisualStyleBackColor = true;
-            Bth_SaveResult.Click += Bth_SaveResult_Click;
+            Btn_SaveResult.Font = new Font("Segoe UI", 14F);
+            Btn_SaveResult.Location = new Point(496, 311);
+            Btn_SaveResult.Name = "Btn_SaveResult";
+            Btn_SaveResult.Size = new Size(270, 48);
+            Btn_SaveResult.TabIndex = 13;
+            Btn_SaveResult.Text = "Сохранить результат";
+            Btn_SaveResult.UseVisualStyleBackColor = true;
+            Btn_SaveResult.Click += Btn_SaveResult_Click;
             // 
-            // Bth_GetFromFile
+            // Btn_GetFromFile
             // 
-            Bth_GetFromFile.Font = new Font("Segoe UI", 14F);
-            Bth_GetFromFile.Location = new Point(496, 384);
-            Bth_GetFromFile.Name = "Bth_GetFromFile";
-            Bth_GetFromFile.Size = new Size(270, 48);
-            Bth_GetFromFile.TabIndex = 14;
-            Bth_GetFromFile.Text = "Ввод данных из файла";
-            Bth_GetFromFile.UseVisualStyleBackColor = true;
-            Bth_GetFromFile.Click += Bth_GetFromFile_Click;
+            Btn_GetFromFile.Font = new Font("Segoe UI", 14F);
+            Btn_GetFromFile.Location = new Point(496, 384);
+            Btn_GetFromFile.Name = "Btn_GetFromFile";
+            Btn_GetFromFile.Size = new Size(270, 48);
+            Btn_GetFromFile.TabIndex = 14;
+            Btn_GetFromFile.Text = "Ввод данных из файла";
+            Btn_GetFromFile.UseVisualStyleBackColor = true;
+            Btn_GetFromFile.Click += Btn_GetFromFile_Click;
             // 
             // result_label
             // 
             result_label.AutoSize = true;
             result_label.Font = new Font("Segoe UI", 14F);
-            result_label.Image = (Image)resources.GetObject("result_label.Image");
-            result_label.Location = new Point(496, 126);
+            result_label.Location = new Point(535, 119);
             result_label.Name = "result_label";
             result_label.Size = new Size(121, 32);
             result_label.TabIndex = 15;
@@ -256,16 +254,16 @@
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(854, 504);
+            ClientSize = new Size(940, 504);
             Controls.Add(pointBy2);
             Controls.Add(pointCy3);
             Controls.Add(pointDy4);
             Controls.Add(pointAy1);
             Controls.Add(result_label);
-            Controls.Add(Bth_GetFromFile);
-            Controls.Add(Bth_SaveResult);
-            Controls.Add(Bth_SaveOriginal);
-            Controls.Add(Bth_GetResult);
+            Controls.Add(Btn_GetFromFile);
+            Controls.Add(Btn_SaveResult);
+            Controls.Add(Btn_SaveOriginal);
+            Controls.Add(Btn_GetResult);
             Controls.Add(pointBx2);
             Controls.Add(pointCx3);
             Controls.Add(pointDx4);
@@ -296,10 +294,10 @@
         private TextBox pointDx4;
         private TextBox pointCx3;
         private TextBox pointBx2;
-        private Button Bth_GetResult;
-        private Button Bth_SaveOriginal;
-        private Button Bth_SaveResult;
-        private Button Bth_GetFromFile;
+        private Button Btn_GetResult;
+        private Button Btn_SaveOriginal;
+        private Button Btn_SaveResult;
+        private Button Btn_GetFromFile;
         private Label result_label;
         private TextBox pointAy1;
         private TextBox pointDy4;
