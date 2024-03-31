@@ -173,9 +173,18 @@ namespace Work1RPS
                    "x = " + Math.Round(x2, 3).ToString("0.000") + ", y = " + Math.Round(y2, 3).ToString("0.000");
             }
 
-            //Отрезки накладываются друг на друга 
+            //Прямые накладываются друг на друга 
             if (k1 == k2 && b1 == b2)
-                message = "Отрезки накладываются друг на друга.";
+            {
+                SwapAll(ref y1, ref y2, ref y3, ref y4,
+                        ref x1, ref x2, ref x3, ref x4);
+
+                if(((x3 - x2) <= 0) && ((y3 - y2) <= 0))
+                    message = "Отрезки накладываются друг на друга.";
+                else
+                    message = "Отрезки не пересекаются.";
+
+            }
 
             return message;
         }
