@@ -179,7 +179,7 @@ namespace Work1RPS
                 SwapAll(ref y1, ref y2, ref y3, ref y4,
                         ref x1, ref x2, ref x3, ref x4);
 
-                if(((x3 - x2) <= 0) && ((y3 - y2) <= 0))
+                if((x3 <= x2) && (y3 <= y2))
                     message = "Отрезки накладываются друг на друга.";
                 else
                     message = "Отрезки не пересекаются.";
