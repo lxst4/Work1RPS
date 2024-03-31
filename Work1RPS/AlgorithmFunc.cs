@@ -59,11 +59,6 @@ namespace Work1RPS
             if ((x2 - x1) == 0)
             {
                 xvertical = x1;
-                Console.WriteLine
-                (Environment.NewLine +
-                 "Уравнение прямой для отрезка 1" + Environment.NewLine +
-                 "x = " + x1 + Environment.NewLine);
-
             }
 
             //Не вертикальная
@@ -73,10 +68,7 @@ namespace Work1RPS
                 b1 = y1 - k1 * x1;
                 knovertical = k1;
                 bnovertical = b1;
-                Console.WriteLine
-                (Environment.NewLine +
-                 "Уравнение прямой для отрезка 1" + Environment.NewLine +
-                 "y = " + Math.Round(k1, 3) + "* x + " + Math.Round(b1, 3) + Environment.NewLine);
+
             }
 
             //Вторая прямая
@@ -86,11 +78,7 @@ namespace Work1RPS
             if ((x4 - x3) == 0)
             {
                 xvertical = x3;
-                Console.WriteLine
-                (Environment.NewLine +
-                "Уравнение прямой для отрезка 2" + Environment.NewLine +
-                "x = " + x3 + Environment.NewLine
-                );
+
             }
 
             //не вертикальная
@@ -100,11 +88,7 @@ namespace Work1RPS
                 b2 = y3 - k2 * x3;
                 knovertical = k2;
                 bnovertical = b2;
-                Console.WriteLine
-                   (Environment.NewLine +
-                   "Уравнение прямой для отрезка 2" + Environment.NewLine +
-                   "y = " + Math.Round(k2, 3) + "*x + " + Math.Round(b2, 3) + Environment.NewLine
-                   );
+
             }
 
             //Отрезки параллельны
@@ -137,7 +121,7 @@ namespace Work1RPS
             }
 
             //Отрезки не параллельны и не совпадают
-            if (k1 != k2 && b1 != b2)
+            if (k1 != k2)
             {
                 xintersection = (b2 - b1) / (k1 - k2);
                 yintersection = k1 * xintersection + b1;
