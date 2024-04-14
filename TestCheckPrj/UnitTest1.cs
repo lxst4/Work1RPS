@@ -10,7 +10,11 @@ namespace TestCheckPrj
         {
             decimal x1 = 11, y1 = 11, x2 = -3, y2 = -3, x3 = 4, y3 = 4, x4 = -25, y4 = -25;
 
-            const string RESULT = "Отрезки накладываются друг на друга.";
+            string RESULT =
+                        "Отрезки накладываются друг на друга." + Environment.NewLine +
+                        "Точки наложения:" + Environment.NewLine +
+                        "x1 = -3,000, y1 = -3,000" + Environment.NewLine +
+                        "x2 = 4,000, y2 = 4,000";
 
             Assert.AreEqual(RESULT, AlgorithmFunc.StartAlgorithm(ref x1, ref y1, ref x2, ref y2,
                                                                  ref x3, ref y3, ref x4, ref y4));
@@ -30,11 +34,11 @@ namespace TestCheckPrj
         }
 
         [TestMethod]
-        public void TestMethod3()
+        public void TestMethod3() // параллельные
         {
             decimal x1 = 0, y1 = 4, x2 = 4, y2 = 0, x3 = -5, y3 = 0, x4 = 0, y4 = -5;
 
-            const string RESULT = "Отрезки параллельны, точек пересечения нет.";
+            const string RESULT = "Отрезки не пересекаются.";
 
             Assert.AreEqual(RESULT, AlgorithmFunc.StartAlgorithm(ref x1, ref y1, ref x2, ref y2,
                                                                  ref x3, ref y3, ref x4, ref y4));
