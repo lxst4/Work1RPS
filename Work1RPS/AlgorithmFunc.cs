@@ -16,158 +16,161 @@ namespace Work1RPS
             "Нахождение точки пересечения отрезков";
             return hello;
         }
-        static void Swap(ref decimal x, ref decimal y)
+
+        const decimal EPS = 1E-9m;
+
+        public struct Point
         {
-            decimal tmp = x;
-            x = y;
-            y = tmp;
+            public decimal x, y;
         }
 
-        static void SwapAll(ref decimal y1, ref decimal y2, ref decimal y3, ref decimal y4,
-                            ref decimal x1, ref decimal x2, ref decimal x3, ref decimal x4)
+        public struct Line
         {
-            if (y1 > y2)
+            public decimal a, b, c;
+
+            public Line(Point p, Point q)
             {
-                Swap(ref y1, ref y2);
+                a = p.y - q.y;
+                b = q.x - p.x;
+                c = -a * p.x - b * p.y;
+                Norm();
             }
 
-            if (x1 > x2)
+            private void Norm()
             {
-                Swap(ref x1, ref x2);
-            }
-
-            if (y3 > y4)
-            {
-                Swap(ref y3, ref y4);
-            }
-
-            if (x3 > x4)
-            {
-                Swap(ref x3, ref x4);
+                decimal z = (decimal)Math.Sqrt((double)(a * a + b * b));
+                if (Math.Abs(z) > EPS)
+                {
+                    a /= z;
+                    b /= z;
+                    c /= z;
+                }
             }
         }
+
+        public static decimal Dist(Line l, Point p)
+        {
+            return l.a * p.x + l.b * p.y + l.c;
+        }
+
+        public static bool Intersect(Point a, Point b, Point c, Point d, out Point left, out Point right)
+        {
+            left = new Point();
+            right = new Point();
+
+            if (!Intersect1D(a.x, b.x, c.x, d.x) || !Intersect1D(a.y, b.y, c.y, d.y))
+                return false;
+
+            Line m = new Line(a, b);
+            Line n = new Line(c, d);
+
+            decimal zn = Det(m.a, m.b, n.a, n.b);
+            if (Math.Abs(zn) < EPS)
+            {
+                if (Math.Abs(Dist(m, c)) > EPS || Math.Abs(Dist(n, a)) > EPS)
+                    return false;
+
+                if (b.x < a.x)
+                {
+                    Point temp = a;
+                    a = b;
+                    b = temp;
+                }
+
+                if (d.x < c.x)
+                {
+                    Point temp = c;
+                    c = d;
+                    d = temp;
+                }
+
+                left.x = Math.Max(a.x, c.x);
+                right.x = Math.Min(b.x, d.x);
+
+                left.y = Math.Max(a.y, c.y);
+                right.y = Math.Min(b.y, d.y);
+
+                return true;
+            }
+            else
+            {
+                left.x = right.x = -Det(m.c, m.b, n.c, n.b) / zn;
+                left.y = right.y = -Det(m.a, m.c, n.a, n.c) / zn;
+
+                return Betw(a.x, b.x, left.x)
+                    && Betw(a.y, b.y, left.y)
+                    && Betw(c.x, d.x, left.x)
+                    && Betw(c.y, d.y, left.y);
+            }
+        }
+
+        private static bool Betw(decimal l, decimal r, decimal x)
+        {
+            return Math.Min(l, r) <= x + EPS && x <= Math.Max(l, r) + EPS;
+        }
+
+        private static bool Intersect1D(decimal a, decimal b, decimal c, decimal d)
+        {
+            if (a > b)
+            {
+                decimal temp = a;
+                a = b;
+                b = temp;
+            }
+
+            if (c > d)
+            {
+                decimal temp = c;
+                c = d;
+                d = temp;
+            }
+
+            return Math.Max(a, c) <= Math.Min(b, d) + EPS;
+        }
+
+        private static decimal Det(decimal a, decimal b, decimal c, decimal d)
+        {
+            return a * d - b * c;
+        }
+
+
         public static string StartAlgorithm(ref decimal x1, ref decimal y1, ref decimal x2, ref decimal y2,
                                             ref decimal x3, ref decimal y3, ref decimal x4, ref decimal y4)
         {
-            string message = "0";
+            string message;
 
-            //Находим уравнения прямых
-            //Первая прямая
-            //Вертикальная
-            decimal k1 = 0, b1 = 0, xvertical = 0, knovertical = 0, bnovertical = 0;
+            Point a = new Point { x = x1, y = y1 };
+            Point b = new Point { x = x2, y = y2 };
+            Point c = new Point { x = x3, y = y3 };
+            Point d = new Point { x = x4, y = y4 };
 
-            if ((x2 - x1) == 0)
+            Point left, right;
+            bool isIntersect = Intersect(a, b, c, d, out left, out right);
+
+            if (isIntersect)
             {
-                xvertical = x1;
+                if (left.x == right.x && left.y == right.y)
+                {
+                    decimal x_intersection = left.x, y_intersection = left.y;
+                    message = 
+                        "Отрезки пересекаются." + Environment.NewLine +
+                        "Точка пересечения:"    + Environment.NewLine +
+                        "x = " + Math.Round(x_intersection, 3).ToString("0.000") + ", y = " + Math.Round(y_intersection, 3).ToString("0.000");
+                }
+                else
+                {
+                    decimal x1_overlap = left.x, y1_overlap = left.y,
+                            x2_overlap = right.x, y2_overlap = right.y;
+                    message = 
+                        "Отрезки накладываются друг на друга." + Environment.NewLine +
+                        "Точки наложения:" + Environment.NewLine +
+                        "x1 = " + Math.Round(x1_overlap, 3).ToString("0.000") + ", y1 = " + Math.Round(y1_overlap, 3).ToString("0.000") + Environment.NewLine +
+                        "x2 = " + Math.Round(x2_overlap, 3).ToString("0.000") + ", y2 = " + Math.Round(y2_overlap, 3).ToString("0.000");
+                }
             }
-
-            //Не вертикальная
             else
             {
-                k1 = (y1 - y2) / (x1 - x2);
-                b1 = y1 - k1 * x1;
-                knovertical = k1;
-                bnovertical = b1;
-
-            }
-
-            //Вторая прямая
-            //Вертикальная
-            decimal k2 = 0, b2 = 0;
-
-            if ((x4 - x3) == 0)
-            {
-                xvertical = x3;
-
-            }
-
-            //не вертикальная
-            else
-            {
-                k2 = (y3 - y4) / (x3 - x4);
-                b2 = y3 - k2 * x3;
-                knovertical = k2;
-                bnovertical = b2;
-
-            }
-
-            //Отрезки параллельны
-            if (k1 == k2 && b1 != b2)
-                message = "Отрезки параллельны, точек пересечения нет.";
-
-            //Один отрезок вертикальный, отрезки не параллельны и не накладываются друг на друга
-            decimal xintersection = 0, yintersection = 0;
-
-            if ((k1 == 0 || k2 == 0) && b1 != b2)
-            {
-                xintersection = xvertical;
-                yintersection = knovertical * xintersection + bnovertical;
-
-                SwapAll(ref y1, ref y2, ref y3, ref y4,
-                        ref x1, ref x2, ref x3, ref x4);
-
-                if ((y1 <= yintersection && yintersection <= y2) && (y3 <= yintersection && yintersection <= y4)
-                      && (x1 <= xintersection && xintersection <= x2) && (x3 <= xintersection && xintersection <= x4))
-                {
-
-                    message = "Отрезки пересекаются. " + Environment.NewLine +
-                    "Точка пересечения:" + Environment.NewLine +
-                    "x = " + Math.Round(xintersection, 3).ToString("0.000") + ", y = " + Math.Round(yintersection, 3).ToString("0.000");
-                }
-
-                else
-                { message = "Отрезки не пересекаются."; }
-
-            }
-
-            //Отрезки не параллельны и не совпадают
-            if (k1 != k2)
-            {
-                xintersection = (b2 - b1) / (k1 - k2);
-                yintersection = k1 * xintersection + b1;
-
-                SwapAll(ref y1, ref y2, ref y3, ref y4,
-                        ref x1, ref x2, ref x3, ref x4);
-
-                if ((y1 <= yintersection && yintersection <= y2) && (y3 <= yintersection && yintersection <= y4)
-                    && (x1 <= xintersection && xintersection <= x2) && (x3 <= xintersection && xintersection <= x4))
-                {
-                    message = "Отрезки пересекаются." + Environment.NewLine +
-                    "Точка пересечения:" + Environment.NewLine +
-                    "x = " + Math.Round(xintersection, 3).ToString("0.000") + ", y = " + Math.Round(yintersection, 3).ToString("0.000");
-                }
-
-                else
-                { message = "Отрезки не пересекаются."; }
-            }
-
-            //начальные или конечные точки отрезков совпадают 
-
-            if ((x1 == x3 && y1 == y3) || (x1 == x4 && y1 == y4))
-            {
-                message = "Отрезки пересекаются." + Environment.NewLine +
-                   "Точка пересечения:" + Environment.NewLine +
-                   "x = " + Math.Round(x1, 3).ToString("0.000") + ", y = " + Math.Round(y1, 3).ToString("0.000");
-            }
-
-            if ((x2 == x3 && y2 == y3) || (x2 == x4 && y2 == y4))
-            {
-                message = "Отрезки пересекаются." + Environment.NewLine +
-                   "Точка пересечения:" + Environment.NewLine +
-                   "x = " + Math.Round(x2, 3).ToString("0.000") + ", y = " + Math.Round(y2, 3).ToString("0.000");
-            }
-
-            //Прямые накладываются друг на друга 
-            if (k1 == k2 && b1 == b2)
-            {
-                SwapAll(ref y1, ref y2, ref y3, ref y4,
-                        ref x1, ref x2, ref x3, ref x4);
-
-                if((x3 <= x2) && (y3 <= y2))
-                    message = "Отрезки накладываются друг на друга.";
-                else
-                    message = "Отрезки не пересекаются.";
-
+                message = "Отрезки не пересекаются."; 
             }
 
             return message;
